@@ -5,6 +5,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export default function HomeComp() {
   const navigate = useNavigate();
@@ -15,7 +17,11 @@ export default function HomeComp() {
     navigate("/login");
   }
   return (
-    <Dialog open sx={{ padding: 2 }}>
+    <Dialog open sx={{ padding: 10 }}>
+      <DialogContent>
+        <CalendarMonthIcon></CalendarMonthIcon>
+        <Typography variant="h2">Smart Calendar</Typography>
+      </DialogContent>
       <DialogTitle>Do you have an account?</DialogTitle>
 
       <DialogActions sx={{ justifyContent: "space-around" }}>
