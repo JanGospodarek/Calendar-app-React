@@ -11,7 +11,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { AlertComp } from "./reuseable/AlertComp";
+import { useNavigate } from "react-router-dom";
+
 export default function RegisterComp() {
+  const navigate = useNavigate();
+
   const [pass, setPass] = useState("");
   const [alert, setAlert] = useState<AlertType>(null);
   const [pass2, setPass2] = useState("");
@@ -36,6 +40,7 @@ export default function RegisterComp() {
     }
     setPass(value);
   }
+
   function handlePass2Change(event: input) {
     const value = event.target.value.trim();
     if (value.length < 8) {
@@ -60,6 +65,7 @@ export default function RegisterComp() {
     }
     setEmail(value);
   }
+
   function handleLogIn() {
     if (pass && email && !error && !error2 && !error3) {
       setAlert({
@@ -67,6 +73,7 @@ export default function RegisterComp() {
         msg: "User " + email + " added",
         type: "success",
       });
+      navigate("/login");
     }
   }
   return (

@@ -15,7 +15,10 @@ import {
 import { useState } from "react";
 import userData from "../data/users.json";
 import { AlertComp } from "./reuseable/AlertComp";
+import { useNavigate } from "react-router-dom";
 export default function LogInComp() {
+  const navigate = useNavigate();
+
   const [pass, setPass] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -64,6 +67,7 @@ export default function LogInComp() {
           msg: "You are logged in!",
           type: "success",
         });
+        navigate("/main");
       }
     }
   }
