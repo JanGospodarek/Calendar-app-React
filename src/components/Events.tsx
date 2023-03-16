@@ -5,7 +5,7 @@ export function Events() {
     <Card sx={{ padding: "10px" }}>
       <Stack>
         <Typography variant="h5" color="initial">
-          Events
+          Upcomming events
         </Typography>
       </Stack>
     </Card>
