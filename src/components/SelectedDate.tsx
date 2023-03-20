@@ -20,7 +20,7 @@ export function SelectedDate(props: { date: Date }) {
           {date.toDateString()}
         </Typography>
         <Stack spacing={3}>
-          <EventSmall date={date}></EventSmall>
+          <EventSmall radio={true} date={date}></EventSmall>
         </Stack>
       </Stack>
       <IconButton

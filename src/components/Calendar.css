@@ -7,6 +7,11 @@
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
 }
+* {
+  font-family: "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto",
+    '"Helvetica Neue"', "Arial", "sans-serif", '"Apple Color Emoji"',
+    '"Segoe UI Emoji"', '"Segoe UI Symbol"';
+}
 
 .react-calendar--doubleView {
   width: 700px;
