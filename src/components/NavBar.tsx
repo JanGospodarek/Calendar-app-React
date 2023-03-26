@@ -11,9 +11,14 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Stack } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "./data/store";
 export function MuiNavbar() {
   const [open, setOpen] = useState<null | HTMLElement>(null);
   const openB = Boolean(open);
+  const name = useSelector((store: RootState) => store.app.userName);
+  console.log(name);
+
   function handle(event: React.MouseEvent<HTMLButtonElement>) {
     setOpen(event.currentTarget);
   }
@@ -28,6 +33,9 @@ export function MuiNavbar() {
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           React Calendar
+        </Typography>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Hi, {name}
         </Typography>
         <Stack direction="row" spacing={2}>
           <Button

@@ -16,9 +16,12 @@ import { useState } from "react";
 import userData from "../data/users.json";
 import { AlertComp } from "./reuseable/AlertComp";
 import { useNavigate } from "react-router-dom";
+import { appActions } from "./data/store";
+import { useDispatch } from "react-redux/es/exports";
+import Fetch from "./hooks/Fetch";
 export default function LogInComp() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [pass, setPass] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -40,34 +43,64 @@ export default function LogInComp() {
 
     setEmail(value);
   }
-  function handleLogIn() {
+  async function handleLogIn() {
     if (pass && email && !error) {
-      const index = userData.findIndex((el) => el.email == email);
-      if (index == -1) {
-        setAlert({
-          title: "Error",
-          msg: "There is no user with email " + email + " !",
-          type: "error",
-        });
-        return;
-      }
-      const user = userData[index];
-      if (user.password !== pass) {
-        setAlert({
-          title: "Error",
+      //   const index = userData.findIndex((el) => el.email == email);
+      //   if (index == -1) {
+      //     setAlert({
+      //       title: "Error",
+      //       msg: "There is no user with email " + email + " !",
+      //       type: "error",
+      //     });
+      //     return;
+      //   }
+      //   const user = userData[index];
+      //   if (user.password !== pass) {
+      //     setAlert({
+      //       title: "Error",
+      //       msg: "Wrong password!",
+      //       type: "error",
+      //     });
+      //   }
+      //   if (user.password == pass) {
+      //     setAlert({
+      //       title: "Success",
+      //       msg: "You are logged in!",
+      //       type: "success",
+      //     });
+      //     navigate("/main");
+      //   }
+      const response = (await Fetch("http://localhost:4000/fetchUsers", {
+        email: email,
+        password: pass,
+      })) as Response;
+      if (response.status !== 200) return;
 
-          msg: "Wrong password!",
-          type: "error",
-        });
-      }
-      if (user.password == pass) {
+      const data = (await response.json()) as {
+        type: string;
+        msg: string;
+        name: string;
+        id: number;
+      };
+
+      if (data.type == "success") {
         setAlert({
           title: "Success",
-
           msg: "You are logged in!",
           type: "success",
         });
-        navigate("/main");
+        console.log(data);
+
+        dispatch(appActions.setName({ name: data.name, id: data.id }));
+        setTimeout(() => {
+          navigate("/main");
+        }, 300);
+      } else {
+        setAlert({
+          title: "Error",
+          msg: data.msg,
+          type: "error",
+        });
       }
     }
   }

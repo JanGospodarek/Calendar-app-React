@@ -5,4 +5,8 @@ declare global {
     msg: string;
     type: AlertColor | undefined;
   } | null;
+  type AppSlice = {
+    userName: string;
+    userId: number | null;
+  };
 }
