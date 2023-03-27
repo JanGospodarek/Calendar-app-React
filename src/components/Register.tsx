@@ -12,11 +12,13 @@ import {
 import { useState } from "react";
 import { AlertComp } from "./reuseable/AlertComp";
 import { useNavigate } from "react-router-dom";
+import Fetch from "./hooks/Fetch";
 
 export default function RegisterComp() {
   const navigate = useNavigate();
 
   const [pass, setPass] = useState("");
+  const [name, setName] = useState("");
   const [alert, setAlert] = useState<AlertType>(null);
   const [pass2, setPass2] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -55,6 +57,7 @@ export default function RegisterComp() {
     }
     setPass2(value);
   }
+
   function handleEmailChange(event: input) {
     const value = event.target.value.trim();
     if (!email.includes("@")) {
@@ -66,14 +69,38 @@ export default function RegisterComp() {
     setEmail(value);
   }
 
-  function handleLogIn() {
-    if (pass && email && !error && !error2 && !error3) {
-      setAlert({
-        title: "Success!",
-        msg: "User " + email + " added",
-        type: "success",
-      });
-      navigate("/login");
+  function handleNameChange(event: input) {
+    const value = event.target.value.trim();
+    setName(value);
+  }
+
+  async function handleLogIn() {
+    if (name && pass && email && !error && !error2 && !error3) {
+      const response = (await Fetch("http://localhost:4000/addUser", {
+        name: name,
+        email: email,
+        password: pass,
+      })) as Response;
+      if (response.status !== 200) return;
+      const data = await response.json();
+
+      if (data.type == "success") {
+        setAlert({
+          title: "Success",
+          msg: data.msg,
+          type: "success",
+        });
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 300);
+      } else {
+        setAlert({
+          title: "Error",
+          msg: data.msg,
+          type: "error",
+        });
+      }
     }
   }
   return (
@@ -107,6 +134,13 @@ export default function RegisterComp() {
                     alignItems: "center",
                   }}
                 >
+                  <TextField
+                    label="Your name"
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => handleNameChange(e)}
+                  ></TextField>
                   <TextField
                     label="Your email"
                     type="email"
