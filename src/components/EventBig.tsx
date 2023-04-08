@@ -8,9 +8,9 @@ export function EventBig(props: { date: Date }) {
       <Typography variant="h6" color="initial">
         {date.toDateString()}
       </Typography>
-      <EventSmall radio={false} date={date}></EventSmall>
-      <EventSmall radio={false} date={date}></EventSmall>
-      <EventSmall radio={false} date={date}></EventSmall>
+      <EventSmall date={date}></EventSmall>
+      <EventSmall date={date}></EventSmall>
+      <EventSmall date={date}></EventSmall>
     </Stack>
   );
 }

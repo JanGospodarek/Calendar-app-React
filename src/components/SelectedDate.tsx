@@ -1,35 +1,54 @@
-import { Card, Stack, Typography, IconButton } from "@mui/material";
+import { Card, Stack, Typography, IconButton, Modal, Box } from "@mui/material";
 import { EventSmall } from "./EventSmall";
 import AddIcon from "@mui/icons-material/Add";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
+import { ModalComp } from "./ModalComp";
 export function SelectedDate(props: { date: Date }) {
   const date = props.date;
   console.log(date);
-
+  const [openModal, setOpenModal] = useState(false);
   function handleAddEvent(event: SyntheticEvent) {
-    console.log(event.target);
+    setOpenModal(true);
   }
-
+  function handleClose(event: SyntheticEvent) {
+    setOpenModal(false);
+  }
   return (
-    <Card sx={{ padding: "10px", width: "25%", marginLeft: "20px" }}>
-      <Stack>
-        <Typography variant="h5" color="initial">
-          Selected date
-        </Typography>
-        <Typography variant="h6" color="initial">
-          {date.toDateString()}
-        </Typography>
-        <Stack spacing={3}>
-          <EventSmall radio={true} date={date}></EventSmall>
+    <>
+      <Card sx={{ padding: "10px", width: "25%", marginLeft: "20px" }}>
+        <Stack>
+          <Typography variant="h5" color="initial">
+            Selected date
+          </Typography>
+          <Typography variant="h6" color="initial">
+            {date.toDateString()}
+          </Typography>
+          <Stack spacing={3}>
+            <EventSmall date={date}></EventSmall>
+          </Stack>
         </Stack>
-      </Stack>
-      <IconButton
-        aria-label="Add event"
-        onClick={handleAddEvent}
-        sx={{ marginTop: "10px" }}
-      >
-        <AddIcon></AddIcon>
-      </IconButton>
-    </Card>
+        <IconButton
+          aria-label="Add event"
+          onClick={handleAddEvent}
+          sx={{ marginTop: "10px" }}
+        >
+          <AddIcon></AddIcon>
+        </IconButton>
+      </Card>
+      {/* Modal */}
+      <ModalComp open={openModal} handleClose={handleClose}></ModalComp>
+    </>
   );
 }
+
+const styles = {
+  width: 350,
+  height: 400,
+  backgroundColor: "white",
+  borderRadius: 10,
+  padding: "30px",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  margin: "-200px 0 0 -125px",
+};
