@@ -14,6 +14,8 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { ChangeEvent, useRef, useState } from "react";
+import "./ModalCompStyles.css";
+
 export function ModalComp(props: { open: boolean; handleClose: Function }) {
   const [color, setColor] = useState<string | null>(null);
   const [data, setData] = useState({ title: "", desc: "" });

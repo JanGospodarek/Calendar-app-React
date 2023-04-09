@@ -3,9 +3,17 @@ import { EventBig } from "./EventBig";
 
 export function Events() {
   return (
-    <Card sx={{ padding: "10px" }}>
+    <Card
+      sx={{
+        padding: "10px",
+        backgroundColor: "back.light",
+        border: "2px solid",
+        borderColor: "back.border",
+        margin: "20px",
+      }}
+    >
       <Stack>
-        <Typography variant="h5" color="initial">
+        <Typography variant="h5" color="initial.main">
           Upcomming events
         </Typography>
         <Stack direction="row" spacing={3}>

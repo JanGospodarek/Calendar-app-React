@@ -5,7 +5,11 @@ import { CalendarComp } from "./Calendar";
 
 export function Content() {
   return (
-    <Grid container spacing={5} sx={{ position: "absolute", top: "105px" }}>
+    <Grid
+      container
+      spacing={5}
+      sx={{ position: "absolute", top: "105px", backgroundColor: "back.main" }}
+    >
       <Grid item xs={12}>
         <Events></Events>
       </Grid>

@@ -15,7 +15,17 @@ export function SelectedDate(props: { date: Date }) {
   }
   return (
     <>
-      <Card sx={{ padding: "10px", width: "25%", marginLeft: "20px" }}>
+      <Card
+        sx={{
+          padding: "10px",
+          width: "25%",
+          marginLeft: "20px",
+          backgroundColor: "back.light",
+          border: "2px solid",
+          borderColor: "back.border",
+          color: "white",
+        }}
+      >
         <Stack>
           <Typography variant="h5" color="initial">
             Selected date
@@ -32,7 +42,7 @@ export function SelectedDate(props: { date: Date }) {
           onClick={handleAddEvent}
           sx={{ marginTop: "10px" }}
         >
-          <AddIcon></AddIcon>
+          <AddIcon sx={{ fill: "white" }}></AddIcon>
         </IconButton>
       </Card>
       {/* Modal */}

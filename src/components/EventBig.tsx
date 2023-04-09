@@ -5,7 +5,7 @@ export function EventBig(props: { date: Date }) {
 
   return (
     <Stack direction="column" spacing={2}>
-      <Typography variant="h6" color="initial">
+      <Typography variant="h6" color="initial.main">
         {date.toDateString()}
       </Typography>
       <EventSmall date={date}></EventSmall>

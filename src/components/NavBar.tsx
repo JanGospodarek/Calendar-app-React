@@ -26,7 +26,7 @@ export function MuiNavbar() {
     setOpen(null);
   }
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "back.light" }}>
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit">
           <CalendarMonthIcon></CalendarMonthIcon>

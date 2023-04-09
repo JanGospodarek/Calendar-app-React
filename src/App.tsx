@@ -8,15 +8,42 @@ import { Main } from "./pages/Main";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const darkTheme = createTheme({
+declare module "@mui/material/styles" {
+  interface PaletteOptions {
+    complementary: PaletteOptions["primary"];
+    back: any;
+    initial: any;
+  }
+}
+
+const theme = createTheme({
   palette: {
-    mode: "light",
+    primary: {
+      main: "#0512a6",
+      light: "#522ec1",
+    },
+    complementary: {
+      main: "#618a11",
+      light: "#9cc12e",
+    },
+    back: {
+      main: "#040B27",
+      light: "rgba(68,74,105,0.4)",
+      border: "#575c7c",
+    },
+    secondary: {
+      main: "#d96a00",
+      light: "#e0c20d",
+    },
+    initial: {
+      main: "#ffffffff",
+    },
   },
 });
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline>
         <BrowserRouter>
           <Routes>

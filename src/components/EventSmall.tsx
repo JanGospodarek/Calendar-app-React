@@ -18,19 +18,19 @@ export function EventSmall(props: { date: Date }) {
         width: "250px",
         height: "90px",
         padding: "5px",
-        // backgroundColor: `${color}`,
+        backgroundColor: "back.light",
       }}
     >
       <Stack direction="row">
-        <Typography variant="subtitle1" color="initial" align="center">
+        <Typography variant="subtitle1" color="initial.main" align="center">
           Event
         </Typography>
       </Stack>
 
-      <Typography variant="subtitle2" color="initial">
+      <Typography variant="subtitle2" color="initial.main">
         10:00-12:00 | {date.toDateString()}
       </Typography>
-      <Typography variant="body2" color="initial">
+      <Typography variant="body2" color="initial.main">
         Opis...
       </Typography>
     </Card>
