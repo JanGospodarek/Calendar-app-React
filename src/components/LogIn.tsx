@@ -45,31 +45,6 @@ export default function LogInComp() {
   }
   async function handleLogIn() {
     if (pass && email && !error) {
-      //   const index = userData.findIndex((el) => el.email == email);
-      //   if (index == -1) {
-      //     setAlert({
-      //       title: "Error",
-      //       msg: "There is no user with email " + email + " !",
-      //       type: "error",
-      //     });
-      //     return;
-      //   }
-      //   const user = userData[index];
-      //   if (user.password !== pass) {
-      //     setAlert({
-      //       title: "Error",
-      //       msg: "Wrong password!",
-      //       type: "error",
-      //     });
-      //   }
-      //   if (user.password == pass) {
-      //     setAlert({
-      //       title: "Success",
-      //       msg: "You are logged in!",
-      //       type: "success",
-      //     });
-      //     navigate("/main");
-      //   }
       const response = (await Fetch("http://localhost:4000/fetchUsers", {
         email: email,
         password: pass,
@@ -80,7 +55,7 @@ export default function LogInComp() {
         type: string;
         msg: string;
         name: string;
-        id: number;
+        id: string;
       };
 
       if (data.type == "success") {
@@ -92,6 +67,10 @@ export default function LogInComp() {
         console.log(data);
 
         dispatch(appActions.setName({ name: data.name, id: data.id }));
+
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("id", data.id);
+
         setTimeout(() => {
           navigate("/main");
         }, 300);

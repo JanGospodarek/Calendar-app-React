@@ -42,7 +42,8 @@ app.post("/addUser", (req, res) => {
       msg: `Account with email ${data.email} alreadt exists!`,
     });
   } else {
-    const id = crypto.randomBytes(4).toString("hex");
+    const id = String(crypto.randomBytes(4).toString("hex"));
+
     userData.push({
       id: id,
       name: data.name,

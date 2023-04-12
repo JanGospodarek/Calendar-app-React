@@ -8,7 +8,12 @@ export function Content() {
     <Grid
       container
       spacing={5}
-      sx={{ position: "absolute", top: "105px", backgroundColor: "back.main" }}
+      sx={{
+        position: "absolute",
+        top: "105px",
+        backgroundColor: "back.main",
+        overflow: "scroll",
+      }}
     >
       <Grid item xs={12}>
         <Events></Events>
