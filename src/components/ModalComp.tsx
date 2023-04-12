@@ -14,11 +14,12 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { ChangeEvent, useRef, useState } from "react";
+import Fetch from "./hooks/Fetch";
 import "./ModalCompStyles.css";
 
 export function ModalComp(props: { open: boolean; handleClose: Function }) {
-  const [color, setColor] = useState<string | null>(null);
-  const [data, setData] = useState({ title: "", desc: "" });
+  const [color, setColor] = useState<string>("normal");
+  const [data, setData] = useState({ title: "", description: "" });
   type input = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
   function handleChangeColor(event: input) {
@@ -33,16 +34,28 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
         setData(state);
         break;
       case "desc":
-        state.desc = event.target.value;
+        state.description = event.target.value;
         setData(state);
         break;
     }
     console.log(data);
   }
-  function handleAddEvent() {
-    const eventData = { ...data, color: color };
-    console.log(eventData);
+  async function handleAddEvent() {
+    const eventData: { title: string; description: string; color: string } = {
+      ...data,
+      color: color,
+    };
 
+    const response = (await Fetch(
+      "http://localhost:4000/fetchUsers",
+      eventData
+    )) as Response;
+    if (response.status !== 200) return;
+
+    const responseData = (await response.json()) as {
+      type: string;
+      msg: string;
+    };
     props.handleClose();
   }
   return (
@@ -99,7 +112,7 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
                   label="Orange"
                 />
                 <FormControlLabel
-                  value="male"
+                  value="blue"
                   control={
                     <Radio
                       checked={color === "#9999ff"}
@@ -111,7 +124,7 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
                   label="Blue"
                 />
                 <FormControlLabel
-                  value="other"
+                  value="green"
                   control={
                     <Radio
                       checked={color === "#99e699"}

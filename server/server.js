@@ -5,8 +5,11 @@ const cors = require("cors");
 const fs = require("fs");
 const crypto = require("crypto");
 app.use(express.json());
-const userData = require("./data/users.json");
 app.use(cors());
+
+const userData = require("./data/users.json");
+const eventData = require("./data/events.json");
+
 app.post("/fetchUsers", (req, res) => {
   const data = req.body;
   let exitData = {};
@@ -33,6 +36,7 @@ app.post("/fetchUsers", (req, res) => {
 
   res.send(JSON.stringify(exitData));
 });
+
 app.post("/addUser", (req, res) => {
   const data = req.body;
   const index = userData.findIndex((el) => el.email == data.email);
@@ -60,6 +64,69 @@ app.post("/addUser", (req, res) => {
   }
   console.log(data);
 });
+
+app.post("/addEvent", (req, res) => {
+  const data = req.body;
+  //prettier-ignore
+  eventData.push({ title: data.title, desription: data.desription ,date:data.date,userId:data.userId,eventId:String(crypto.randomBytes(4).toString("hex")),color:data.color});
+  const exit = JSON.stringify(eventData);
+  fs.writeFile("./data/events.json", exit, "utf8", () => {
+    res.send({
+      type: "success",
+      msg: `Event ${data.title} added!`,
+    });
+  });
+});
+
+app.post("/fetchEvents", (req, res) => {
+  const range = req.body.range;
+  const events = [];
+
+  switch (range.length) {
+    case 1:
+      eventData.forEach((event) => {
+        if (event.date == range[0]) {
+          events.push(events);
+        }
+      });
+
+      res.send({
+        type: "success",
+        data: JSON.stringify({ events: events }),
+      });
+
+      break;
+
+    case 2:
+      range.forEach((date) => {
+        const todayEvents = [];
+
+        eventData.forEach((event) => {
+          if (event.date == date) {
+            todayEvents.push(events);
+          }
+        });
+
+        if (todayEvents.length == 0) {
+          todayEvents[0] = {
+            type: "no-events",
+            date: date,
+            msg: "There is no events on this day",
+          };
+        }
+
+        events.push(todayEvents);
+      });
+
+      res.send({
+        type: "success",
+        data: JSON.stringify({ events: events }),
+      });
+
+      break;
+  }
+});
+
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
 });
