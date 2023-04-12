@@ -67,10 +67,13 @@ app.post("/addUser", (req, res) => {
 
 app.post("/addEvent", (req, res) => {
   const data = req.body;
+  console.log(data);
+
   //prettier-ignore
   eventData.push({ title: data.title, desription: data.desription ,date:data.date,userId:data.userId,eventId:String(crypto.randomBytes(4).toString("hex")),color:data.color});
   const exit = JSON.stringify(eventData);
-  fs.writeFile("./data/events.json", exit, "utf8", () => {
+  fs.writeFile("./data/events.json", exit, "utf8", (err) => {
+    console.log(err);
     res.send({
       type: "success",
       msg: `Event ${data.title} added!`,
