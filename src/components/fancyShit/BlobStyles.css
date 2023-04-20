@@ -1,4 +1,4 @@
-#blob {
+/* #blob {
   background-color: white;
   height: 34vmax;
   aspect-ratio: 1;
@@ -18,4 +18,4 @@
   position: absolute;
   z-index: 2;
   backdrop-filter: blur(12vmax);
-}
+} */

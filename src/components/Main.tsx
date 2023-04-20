@@ -4,10 +4,14 @@ import { MuiNavbar } from "./NavBar";
 import { AlertComp } from "./reuseable/AlertComp";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { appActions } from "./data/store";
 export function MainComp() {
   const [alert, setAlert] = useState<AlertType>(null);
   const navigate = useNavigate();
   const name = localStorage.getItem("name");
+  const id = localStorage.getItem("id");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (name == null) {
@@ -20,6 +24,8 @@ export function MainComp() {
       setTimeout(() => {
         navigate("/login");
       }, 300);
+    } else {
+      dispatch(appActions.setName({ name: name, id: id }));
     }
   }, []);
 

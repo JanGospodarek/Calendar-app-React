@@ -7,7 +7,6 @@ const appSlice = createSlice({
   reducers: {
     setName(state, action) {
       console.log(action);
-
       state.userName = action.payload.name;
       state.userId = action.payload.id;
       console.log(state.userName);

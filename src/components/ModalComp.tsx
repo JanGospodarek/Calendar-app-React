@@ -17,12 +17,16 @@ import { ChangeEvent, useRef, useState, useEffect } from "react";
 import Fetch from "./hooks/Fetch";
 import "./ModalCompStyles.css";
 import { AlertComp } from "./reuseable/AlertComp";
+import { useSelector } from "react-redux";
+import { RootState } from "./data/store";
 export function ModalComp(props: { open: boolean; handleClose: Function }) {
   const [color, setColor] = useState<string>("normal");
   const [data, setData] = useState({ title: "", description: "" });
   const [alert, setAlert] = useState<AlertType>(null);
 
   type input = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
+  const userId = useSelector((state: RootState) => state.app.userId);
+  console.log(useSelector((state: RootState) => state.app));
 
   function handleChangeColor(event: input) {
     setColor(event.target.value);
@@ -43,9 +47,10 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
     console.log(data);
   }
   async function handleAddEvent() {
-    const eventData: { title: string; description: string; color: string } = {
+    const eventData = {
       ...data,
       color: color,
+      userId: userId,
     };
 
     const response = (await Fetch(
