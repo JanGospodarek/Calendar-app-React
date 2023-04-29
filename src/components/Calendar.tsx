@@ -7,9 +7,20 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import { RootState, appActions } from "./data/store";
+import { useDispatch, useSelector } from "react-redux";
 export function CalendarComp() {
-  const [date, setDate] = useState(new Date());
+  // const initialDate = useSelector((state: RootState) => state.app.selectedDate);
 
+  const [date, setDate] = useState(new Date());
+  const dispatch = useDispatch();
+
+  function handleChangeDate(event: any) {
+    setDate(event);
+    console.log(event);
+
+    dispatch(appActions.setSelectedDate({ date: event.toDateString() }));
+  }
   return (
     <Card
       sx={{
@@ -27,7 +38,7 @@ export function CalendarComp() {
         </Typography>
         <Stack direction="row">
           <Calendar
-            onChange={setDate}
+            onChange={handleChangeDate}
             value={date}
             nextLabel={<NavigateNextIcon fontSize="large" />}
             nextAriaLabel="Go to next month"
@@ -38,7 +49,7 @@ export function CalendarComp() {
             prev2Label={<SkipPreviousIcon fontSize="large" />}
             prev2AriaLabel="Go to prev year"
           />
-          <SelectedDate date={date}></SelectedDate>
+          <SelectedDate></SelectedDate>
         </Stack>
       </Stack>
     </Card>

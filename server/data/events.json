@@ -1,1 +1,11 @@
-[{"title":"Event 1","desription":"dupaaaa","date":"Wed Apr 12 2023","userId":"efefef","eventId":"iejdeifjd","color":"#99e699"},{"title":"wowww","userId":null,"eventId":"8e7d1bfb","color":"#9999ff"},{"title":"wwww","userId":"efefef","eventId":"3014c415","color":"#9999ff"},{"title":"www","userId":"efefef","eventId":"4fc08c45","color":"#ffb3b3"}]
+[
+  {
+    "title": "event",
+    "date": "Sat Apr 29 2023",
+    "startingHour": "12:45",
+    "endingHour": "13:0",
+    "userId": "efefef",
+    "eventId": "fdeeed7c",
+    "color": "#9999ff"
+  }
+]

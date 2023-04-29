@@ -1,19 +1,30 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 // ...
-const init: AppSlice = { userName: "", userId: null };
+const init: AppSlice = {
+  userName: "",
+  userId: null,
+  selectedDate: new Date().toDateString(),
+  todayEvents: [],
+};
 const appSlice = createSlice({
   name: "app",
   initialState: init,
   reducers: {
     setName(state, action) {
-      console.log(action);
       state.userName = action.payload.name;
       state.userId = action.payload.id;
-      console.log(state.userName);
     },
+    setSelectedDate(state, action) {
+      state.selectedDate = action.payload.date;
+    },
+    getSelectedDateEvents(state, action) {},
   },
 });
 const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
   reducer: {
     app: appSlice.reducer,
   },

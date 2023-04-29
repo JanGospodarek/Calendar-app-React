@@ -13,20 +13,29 @@ import {
   Stack,
   FormControlLabel,
 } from "@mui/material";
+import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
 import Fetch from "./hooks/Fetch";
 import "./ModalCompStyles.css";
 import { AlertComp } from "./reuseable/AlertComp";
 import { useSelector } from "react-redux";
 import { RootState } from "./data/store";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 export function ModalComp(props: { open: boolean; handleClose: Function }) {
+  const date = useSelector((state: RootState) => state.app.selectedDate);
+  console.log("wybrana ", date);
+
   const [color, setColor] = useState<string>("normal");
   const [data, setData] = useState({ title: "", description: "" });
   const [alert, setAlert] = useState<AlertType>(null);
+  const [startingHour, setStartingHour] = useState<Dayjs | null>(dayjs(date));
+  const [endingHour, setEndingHour] = useState<Dayjs | null>(dayjs(date));
+  console.log("godzinki", startingHour, endingHour);
 
   type input = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
   const userId = useSelector((state: RootState) => state.app.userId);
-  console.log(useSelector((state: RootState) => state.app));
 
   function handleChangeColor(event: input) {
     setColor(event.target.value);
@@ -44,13 +53,17 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
         setData(state);
         break;
     }
-    console.log(data);
   }
   async function handleAddEvent() {
     const eventData = {
       ...data,
       color: color,
       userId: userId,
+      date: date,
+      startingHour: `${dayjs(startingHour).hour()}:${dayjs(
+        startingHour
+      ).minute()}`,
+      endingHour: `${dayjs(endingHour).hour()}:${dayjs(endingHour).minute()}`,
     };
 
     const response = (await Fetch(
@@ -70,7 +83,6 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
       type: string;
       msg: string;
     };
-    console.log(responseData);
 
     if (responseData.type !== "success") return;
     setAlert({
@@ -85,7 +97,7 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
     }, 1000);
   }
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog
         open={props.open}
         onClose={(e) => {
@@ -117,6 +129,18 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
                 multiline
                 minRows={2}
                 maxRows={4}
+              />
+              <TimeField
+                label="Controlled field"
+                value={startingHour}
+                onChange={(newValue) => setStartingHour(newValue)}
+                format="HH:mm"
+              />
+              <TimeField
+                label="Controlled field"
+                value={endingHour}
+                onChange={(newValue) => setEndingHour(newValue)}
+                format="HH:mm"
               />
             </Stack>
             <Stack>
@@ -179,6 +203,6 @@ export function ModalComp(props: { open: boolean; handleClose: Function }) {
         </DialogActions>
       </Dialog>
       {alert !== null ? <AlertComp alert={alert} /> : <></>}
-    </>
+    </LocalizationProvider>
   );
 }

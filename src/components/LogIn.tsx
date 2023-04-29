@@ -64,7 +64,6 @@ export default function LogInComp() {
           msg: "You are logged in!",
           type: "success",
         });
-        console.log(data);
 
         dispatch(appActions.setName({ name: data.name, id: data.id }));
 

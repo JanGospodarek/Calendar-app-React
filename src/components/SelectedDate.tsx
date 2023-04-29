@@ -3,9 +3,10 @@ import { EventSmall } from "./EventSmall";
 import AddIcon from "@mui/icons-material/Add";
 import { SyntheticEvent, useState } from "react";
 import { ModalComp } from "./ModalComp";
-export function SelectedDate(props: { date: Date }) {
-  const date = props.date;
-  console.log(date);
+import { useSelector } from "react-redux";
+import { RootState } from "./data/store";
+export function SelectedDate() {
+  const date = useSelector((state: RootState) => state.app.selectedDate);
   const [openModal, setOpenModal] = useState(false);
   function handleAddEvent(event: SyntheticEvent) {
     setOpenModal(true);
@@ -31,7 +32,7 @@ export function SelectedDate(props: { date: Date }) {
             Selected date
           </Typography>
           <Typography variant="h6" color="initial">
-            {date.toDateString()}
+            {date}
           </Typography>
           <Stack spacing={3}>
             <EventSmall date={date}></EventSmall>

@@ -11,7 +11,6 @@ export function Blob() {
       },
       { duration: 3000, fill: "forwards" }
     );
-    console.log(ref.current);
   };
 
   return (

@@ -28,7 +28,7 @@ export function EventSmall(props: { date: Date }) {
       </Stack>
 
       <Typography variant="subtitle2" color="initial.main">
-        10:00-12:00 | {date.toDateString()}
+        10:00-12:00 | {`${date}`}
       </Typography>
       <Typography variant="body2" color="initial.main">
         Opis...
