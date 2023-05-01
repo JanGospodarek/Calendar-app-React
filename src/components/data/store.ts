@@ -1,13 +1,13 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 // ...
 const init: AppSlice = {
-  userName: "",
+  userName: '',
   userId: null,
   selectedDate: new Date().toDateString(),
   todayEvents: [],
 };
 const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState: init,
   reducers: {
     setName(state, action) {
@@ -16,6 +16,9 @@ const appSlice = createSlice({
     },
     setSelectedDate(state, action) {
       state.selectedDate = action.payload.date;
+    },
+    setSelectedDateEvents(state, action) {
+      state.todayEvents = action.payload.events;
     },
     getSelectedDateEvents(state, action) {},
   },

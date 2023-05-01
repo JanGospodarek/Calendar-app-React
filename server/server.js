@@ -1,52 +1,51 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const port = 4000;
-const cors = require("cors");
-const fs = require("fs");
-const crypto = require("crypto");
+const cors = require('cors');
+const fs = require('fs');
+const crypto = require('crypto');
 app.use(express.json());
 app.use(cors());
 
-const userData = require("./data/users.json");
-const eventData = require("./data/events.json");
+const userData = require('./data/users.json');
+const eventData = require('./data/events.json');
 
-app.post("/fetchUsers", (req, res) => {
+app.post('/fetchUsers', (req, res) => {
   const data = req.body;
   let exitData = {};
   const index = userData.findIndex((el) => el.email == data.email);
 
   if (index == -1) {
-    exitData.type = "error";
-    exitData.msg = "There is no user with email " + data.email + " !";
+    exitData.type = 'error';
+    exitData.msg = 'There is no user with email ' + data.email + ' !';
   } else {
     const user = userData[index];
 
     if (user.password !== data.password) {
-      exitData.type = "error";
-      exitData.msg = "Wrong password";
+      exitData.type = 'error';
+      exitData.msg = 'Wrong password';
     }
     if (user.password == data.password) {
-      exitData.type = "success";
-      exitData.msg = "You are logged in!";
+      exitData.type = 'success';
+      exitData.msg = 'You are logged in!';
       exitData.name = user.name;
       exitData.id = user.id;
-      console.log(exitData);
     }
   }
 
   res.send(JSON.stringify(exitData));
 });
 
-app.post("/addUser", (req, res) => {
+app.post('/addUser', (req, res) => {
   const data = req.body;
   const index = userData.findIndex((el) => el.email == data.email);
   if (index !== -1) {
     res.send({
-      type: "error",
+      type: 'error',
       msg: `Account with email ${data.email} alreadt exists!`,
     });
   } else {
-    const id = String(crypto.randomBytes(4).toString("hex"));
+    const id = String(crypto.randomBytes(4).toString('hex'));
 
     userData.push({
       id: id,
@@ -55,33 +54,38 @@ app.post("/addUser", (req, res) => {
       password: data.password,
     });
     const exit = JSON.stringify(userData);
-    fs.writeFile("./data/users.json", exit, "utf8", () => {
+    fs.writeFile('./data/users.json', exit, 'utf8', () => {
       res.send({
-        type: "success",
+        type: 'success',
         msg: `Account ${data.email} added!`,
       });
     });
   }
-  console.log(data);
 });
 
-app.post("/addEvent", (req, res) => {
+app.post('/addEvent', (req, res) => {
   const data = req.body;
-  console.log(data);
 
   //prettier-ignore
-  eventData.push({ title: data.title, desription: data.desription ,date:data.date,startingHour:data.startingHour,endingHour:data.endingHour,  userId:data.userId, eventId:String(crypto.randomBytes(4).toString("hex")),  color:data.color});
+  eventData.push({ title: data.title, description: data.description ,date:data.date,startingHour:data.startingHour,endingHour:data.endingHour,  userId:data.userId, eventId:String(crypto.randomBytes(4).toString("hex")),  color:data.color});
   const exit = JSON.stringify(eventData);
-  fs.writeFile("./data/events.json", exit, "utf8", (err) => {
-    console.log(err);
+  fs.writeFile('./data/events.json', exit, 'utf8', (err) => {
+    const events = [];
+    eventData.forEach((event) => {
+      if (event.date == data.date) {
+        events.push(event);
+      }
+    });
+    console.log('events: ', events);
     res.send({
-      type: "success",
+      type: 'success',
       msg: `Event ${data.title} added!`,
+      events: JSON.stringify(events),
     });
   });
 });
 
-app.post("/fetchEvents", (req, res) => {
+app.post('/fetchEvents', (req, res) => {
   const range = req.body.range;
   const events = [];
 
@@ -94,7 +98,7 @@ app.post("/fetchEvents", (req, res) => {
       });
 
       res.send({
-        type: "success",
+        type: 'success',
         data: JSON.stringify({ events: events }),
       });
 
@@ -112,9 +116,9 @@ app.post("/fetchEvents", (req, res) => {
 
         if (todayEvents.length == 0) {
           todayEvents[0] = {
-            type: "no-events",
+            type: 'no-events',
             date: date,
-            msg: "There is no events on this day",
+            msg: 'There is no events on this day',
           };
         }
 
@@ -122,7 +126,7 @@ app.post("/fetchEvents", (req, res) => {
       });
 
       res.send({
-        type: "success",
+        type: 'success',
         data: JSON.stringify({ events: events }),
       });
 

@@ -1,11 +1,1 @@
-[
-  {
-    "title": "event",
-    "date": "Sat Apr 29 2023",
-    "startingHour": "12:45",
-    "endingHour": "13:0",
-    "userId": "efefef",
-    "eventId": "fdeeed7c",
-    "color": "#9999ff"
-  }
-]
+[{"title":"1","date":"Mon May 01 2023","startingHour":"2:2","endingHour":"2:2","userId":"efefef","eventId":"63b58a70","color":"#9999ff"},{"title":"1","date":"Mon May 01 2023","startingHour":"11:1","endingHour":"11:1","userId":"efefef","eventId":"2c9f0b26","color":"#9999ff"},{"title":"wow","description":"wowww","date":"Mon May 01 2023","startingHour":"12:22","endingHour":"12:12","userId":"efefef","eventId":"5c005343","color":"#99e699"}]

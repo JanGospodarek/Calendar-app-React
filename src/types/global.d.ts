@@ -1,6 +1,6 @@
 export {};
 declare global {
-  interface Event {
+  interface EventComp {
     title: string;
     description: string;
     date: string;
@@ -18,7 +18,7 @@ declare global {
   type AppSlice = {
     userName: string;
     userId: number | null;
-    todayEvents: Event[];
+    todayEvents: EventComp[];
     selectedDate: any;
   };
 }

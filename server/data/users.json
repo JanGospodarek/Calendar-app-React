@@ -1,14 +1,1 @@
-[
-  {
-    "id": "efefef",
-    "name": "jan",
-    "email": "jan.pl",
-    "password": "zaq1@WSX"
-  },
-  {
-    "id": "iojiojoj",
-    "name": "ola",
-    "email": "ola.pl",
-    "password": "zaq1@WSX"
-  }
-]
+[{"id":"efefef","name":"jan","email":"jan.pl","password":"zaq1@WSX"},{"id":"iojiojoj","name":"ola","email":"ola.pl","password":"zaq1@WSX"},{"id":"1cd2cad3","name":"wow","email":"wow@wow.pl","password":"zaq1@WSX"}]
