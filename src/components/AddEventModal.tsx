@@ -26,14 +26,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 export function ModalComp(props: { open: boolean; handleClose: Function }) {
   const date = useSelector((state: RootState) => state.app.selectedDate);
-  console.log('wybrana ', date);
   const dispatch = useDispatch();
   const [color, setColor] = useState<string>('normal');
   const [data, setData] = useState({ title: '', description: '' });
   const [alert, setAlert] = useState<AlertType>(null);
   const [startingHour, setStartingHour] = useState<Dayjs | null>(dayjs(date));
   const [endingHour, setEndingHour] = useState<Dayjs | null>(dayjs(date));
-  console.log('godzinki', startingHour, endingHour);
 
   type input = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
   const userId = useSelector((state: RootState) => state.app.userId);

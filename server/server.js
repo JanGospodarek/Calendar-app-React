@@ -104,30 +104,29 @@ app.post('/fetchEvents', (req, res) => {
 
       break;
 
-    case 2:
+    default:
       range.forEach((date) => {
         const todayEvents = [];
 
         eventData.forEach((event) => {
           if (event.date == date) {
-            todayEvents.push(events);
+            todayEvents.push(event);
           }
         });
 
-        if (todayEvents.length == 0) {
-          todayEvents[0] = {
-            type: 'no-events',
-            date: date,
-            msg: 'There is no events on this day',
-          };
+        if (todayEvents.length !== 0) {
+          // todayEvents[0] = {
+          //   type: 'no-events',
+          //   date: date,
+          //   msg: 'There is no events on this day',
+          // };
+          events.push(todayEvents);
         }
-
-        events.push(todayEvents);
       });
 
       res.send({
         type: 'success',
-        data: JSON.stringify({ events: events }),
+        events: JSON.stringify(events),
       });
 
       break;

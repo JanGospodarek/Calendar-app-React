@@ -71,14 +71,12 @@ export function SelectedDate() {
       >
         <Stack>
           <Typography variant='h5' color='initial'>
-            Selected date
-          </Typography>
-          <Typography variant='h6' color='initial'>
             {date}
           </Typography>
-          <Stack spacing={3}>
+
+          <Stack spacing={3} marginTop={2}>
             {events.map((event) => (
-              <Event event={event}></Event>
+              <Event key={event.eventId} event={event}></Event>
             ))}
           </Stack>
         </Stack>
