@@ -1,4 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import Fetch from '../hooks/Fetch';
+
 // ...
 const init: AppSlice = {
   userName: '',

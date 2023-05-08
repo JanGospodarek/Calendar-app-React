@@ -5,15 +5,54 @@ import { SyntheticEvent, useState } from 'react';
 import { ModalComp } from './AddEventModal';
 import { useSelector } from 'react-redux';
 import { RootState } from './data/store';
+import { useEffect } from 'react';
+import Fetch from './hooks/Fetch';
+import { useDispatch } from 'react-redux';
+import { appActions } from './data/store';
 export function SelectedDate() {
   const date = useSelector((state: RootState) => state.app.selectedDate);
-  const events = useSelector((state: RootState) => state.app.todayEvents);
-  console.log(events);
 
+  const events = useSelector((state: RootState) => state.app.todayEvents);
+
+  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [date]);
+
+  async function fetchEvents() {
+    const response = (await Fetch('http://localhost:4000/fetchEvents', {
+      range: [date],
+    })) as Response;
+    if (response.status !== 200) {
+      // setAlert({
+      //   title: 'Error',
+      //   msg: String(response.status),
+      //   type: 'error',
+      // });
+      return;
+    }
+
+    const responseData = (await response.json()) as {
+      type: string;
+      events: any;
+    };
+
+    const events = JSON.parse(responseData.events);
+    console.log(events);
+    dispatch(
+      appActions.setSelectedDateEvents({
+        events: JSON.parse(responseData.events),
+      })
+    );
+    if (responseData.type !== 'success') return;
+  }
+
   function handleAddEvent(event: SyntheticEvent) {
     setOpenModal(true);
   }
+
   function handleClose(event: SyntheticEvent) {
     setOpenModal(false);
   }

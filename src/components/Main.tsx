@@ -38,7 +38,7 @@ export function MainComp() {
         sx={{
           backgroundColor: 'back.main',
           height: '100vh',
-          overflow: 'scroll',
+          overflowY: 'hidden',
         }}
       >
         <MuiNavbar name={name}></MuiNavbar>
@@ -49,7 +49,7 @@ export function MainComp() {
             position: 'absolute',
             top: '105px',
             backgroundColor: 'back.main',
-            overflow: 'scroll',
+            overflow: 'hidden',
           }}
         >
           <Grid item xs={12}>
@@ -59,7 +59,7 @@ export function MainComp() {
           <Grid item xs={12}>
             <CalendarComp />
           </Grid>
-        </Grid>{' '}
+        </Grid>
       </Stack>
       {alert !== null ? <AlertComp alert={alert} /> : <></>}
     </>

@@ -93,13 +93,13 @@ app.post('/fetchEvents', (req, res) => {
     case 1:
       eventData.forEach((event) => {
         if (event.date == range[0]) {
-          events.push(events);
+          events.push(event);
         }
       });
 
       res.send({
         type: 'success',
-        data: JSON.stringify({ events: events }),
+        events: JSON.stringify(events),
       });
 
       break;
